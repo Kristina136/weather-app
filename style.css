@@ -19,7 +19,6 @@ background-size: cover;
     display: flex;
     flex-direction: column;
     background-image: linear-gradient(rgba(233, 200, 200, 0.3), rgba(0, 0, 0, 0.6));
-   
     font-family: 'Roboto', sans-serif;
   }
   .container2{
@@ -189,6 +188,9 @@ text-align: center;
     margin: 0;
   width:100vw !important;
   }
+  #container {
+  width: 300px;
    
+  }
   }
 

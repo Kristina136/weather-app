@@ -182,6 +182,20 @@ body {
   visibility: visible;
 }
 
+#localContainer{
+  display: flex;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.422);
+  color: rgb(255, 255, 255);
+  font-family: "Roboto", sans-serif;
+}
+.savedEl{
+  width: auto;
+  padding: 10px;
+  border: 2px solid #cdf3a2;
+  border-radius: 14px;
+  list-style-type: none;
+}
 @media all and (max-width: 800px) {
   body {
     height: 100vh;

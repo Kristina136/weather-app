@@ -4,8 +4,6 @@ const clothes = document.querySelector("#clothes");
 const btn = document.querySelector(".btn");
 btn.addEventListener("click", enter);
 
-
-
 //API endpoint,key
 
 const api = {
@@ -13,13 +11,10 @@ const api = {
   key: "07b1bdf389ef89f12fc630ed0a493641",
 };
 
-//When window first time onload what to show and localStorage
-
 const input = document.querySelector("#input");
 input.addEventListener("keypress", enter);
 
-// let state = "Bali";
-// input.value = state;
+//When window first time onload what to show and localStorage
 
 window.onload = function () {
   if (localStorage.getItem("input") !== null) {
@@ -34,15 +29,14 @@ async function getInfoCopie(data) {
   );
   const result = await res.json();
   displayResult(result);
+  input.value = "";
 }
-
 
 //data from input and click enter
 function enter(e) {
   if (e.keyCode === 13) {
     localStorage.setItem("input", input.value);
     getInfo(input.value);
-    
   }
 }
 
@@ -54,11 +48,9 @@ document.querySelector(".btn").addEventListener("click", function () {
 //get API
 
 async function getInfo(data) {
-  
   const res = await fetch(
     `${api.endpoint}weather?q=${data}&units=metric&appID=${api.key}`
   );
-  console.log(data);
   const result = await res.json();
   displayResult(result);
 
@@ -75,10 +67,10 @@ async function getInfo(data) {
     scale: "0",
     duration: 3,
   });
-  input.value=""
+  input.value = "";
 }
 
-//display city 
+//display city
 
 function displayResult(result) {
   if (input.value === "") {
@@ -93,10 +85,27 @@ function displayResult(result) {
 
   getOurDate();
 
+  //save some cities to localStorage
+
+  const localContainer = document.querySelector("#localContainer");
+  const addBtn = document.querySelector(".add");
+  addBtn.addEventListener("click", addToFav);
+
+  function addToFav() {
+    const item = document.createElement("li");
+    item.innerText = `${result.name} ${Math.round(result.main.temp)}°`;
+
+    localContainer.appendChild(item);
+
+    item.classList.add("savedEl");
+
+    //   item.addEventListener('dblclick', function(){
+    //     localContainer.removeChild(item);
+    // })
+  }
 
   //change pic depend of weather
 
-  
   if (result.main.temp <= -15) {
     clothes.setAttribute("src", "snowing.png");
   } else if (result.weather[0].main === "Rain") {
@@ -114,7 +123,6 @@ function displayResult(result) {
   } else if (result.main.temp > 22) {
     clothes.setAttribute("src", "hot.png");
   }
-
 
   //display information
   let temperature = document.querySelector("#temperature");
@@ -140,14 +148,11 @@ function displayResult(result) {
   variation2.innerHTML =
     "Max " + `${Math.round(result.main.temp_max)}<span>°</span>`;
 
-
-//change background depend of name of city
+  //change background depend of name of city
 
   document.body.style.backgroundImage =
     "url('https://source.unsplash.com/1600x900/?" + result.name + "')";
 }
-
-
 
 //correctly display of date
 
@@ -186,8 +191,6 @@ function getOurDate() {
     `${day}` + " " + `${todayDate}` + " " + `${month}` + " " + `${year}`;
 }
 
-
-
 gsap.from("#temperature", {
   x: 100,
   scale: "0",
@@ -201,29 +204,43 @@ gsap.from("#city", {
   duration: 3,
 });
 
-
 //container "details" and animation
-show.addEventListener("click", function() {
-  container2.classList.toggle("visible")
-    gsap.fromTo(".feel",  {opacity: 0},{
+show.addEventListener("click", function () {
+  container2.classList.toggle("visible");
+  gsap.fromTo(
+    ".feel",
+    { opacity: 0 },
+    {
       opacity: 1,
       duration: 1.6,
       delay: 0.5,
-    });
-    gsap.fromTo(".conditions", {opacity: 0},{
+    }
+  );
+  gsap.fromTo(
+    ".conditions",
+    { opacity: 0 },
+    {
       opacity: 1,
       duration: 1.6,
       delay: 1,
-    });
-    gsap.fromTo(".variation", {opacity: 0},{
+    }
+  );
+  gsap.fromTo(
+    ".variation",
+    { opacity: 0 },
+    {
       opacity: 1,
       duration: 1.6,
       delay: 1.5,
-    });
-    gsap.fromTo(".wind", {opacity: 0},{
+    }
+  );
+  gsap.fromTo(
+    ".wind",
+    { opacity: 0 },
+    {
       opacity: 1,
       duration: 1.6,
       delay: 2,
-    });
-  }
+    }
   );
+});

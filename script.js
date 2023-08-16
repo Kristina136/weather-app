@@ -3,6 +3,12 @@ const container2 = document.querySelector(".container2");
 const clothes = document.querySelector("#clothes");
 const btn = document.querySelector(".btn");
 btn.addEventListener("click", enter);
+const localContainer = document.querySelector(".localContainer");
+const containerComplect = document.querySelector(".containerComplect");
+const addBtn = document.querySelector(".add");
+addBtn.addEventListener("click", addToFav);
+const deleteAll= document.querySelector(".deleteAll")
+
 
 //API endpoint,key
 
@@ -14,15 +20,19 @@ const api = {
 const input = document.querySelector("#input");
 input.addEventListener("keypress", enter);
 
+
+
+
 //When window first time onload what to show and localStorage
 
-window.onload = function () {
-  if (localStorage.getItem("input") !== null) {
-    getInfoCopie(localStorage.getItem("input"));
-  } else {
-    getInfoCopie("Bali");
-  }
-};
+if (localStorage.getItem("input") !== null) {
+  getInfoCopie(localStorage.getItem("input"));
+} else {
+  getInfoCopie("Bali");
+}
+
+
+//Get API for display info from LocalStorage by upload
 async function getInfoCopie(data) {
   const res = await fetch(
     `${api.endpoint}weather?q=${data}&units=metric&appID=${api.key}`
@@ -85,25 +95,6 @@ function displayResult(result) {
 
   getOurDate();
 
-  //save some cities to localStorage
-
-  const localContainer = document.querySelector("#localContainer");
-  const addBtn = document.querySelector(".add");
-  addBtn.addEventListener("click", addToFav);
-
-  function addToFav() {
-    const item = document.createElement("li");
-    item.innerText = `${result.name} ${Math.round(result.main.temp)}°`;
-
-    localContainer.appendChild(item);
-
-    item.classList.add("savedEl");
-
-    //   item.addEventListener('dblclick', function(){
-    //     localContainer.removeChild(item);
-    // })
-  }
-
   //change pic depend of weather
 
   if (result.main.temp <= -15) {
@@ -153,6 +144,81 @@ function displayResult(result) {
   document.body.style.backgroundImage =
     "url('https://source.unsplash.com/1600x900/?" + result.name + "')";
 }
+
+
+//let arrFromSavedToFav =  localStorage.getItem("saved") || [];
+let arrFromSavedToFav =  [];
+
+//display info from LocalStorage by upload
+if(localStorage.getItem("saved") !== null) {
+  let array=localStorage.getItem("saved") // ['Bali 25°', 'Berlin 18°']
+  let arrayFromSaved=array.split(",")
+
+  arrayFromSaved.forEach(e=>{
+    const item = document.createElement("li");
+    item.textContent=e;
+    item.classList.add("savedEl");
+    localContainer.appendChild(item);
+    containerComplect.classList.add("localContainerAfter")
+  })
+ localStorage.setItem("newSaved", array)
+}
+
+//Delete all
+deleteAll.addEventListener("click", deleteAllFunc)
+function deleteAllFunc(){
+  localStorage.removeItem("saved");
+  localStorage.removeItem("newSaved");
+    localContainer.innerHTML="";
+    window.location.reload()
+}
+
+// by click "add" save some cities to localStorage
+
+async function addToFav() {
+  let storage = localStorage.getItem("input");
+  const res = await fetch(
+    `${api.endpoint}weather?q=${storage}&units=metric&appID=${api.key}`);
+  const result = await res.json();
+  const item = document.createElement("li");
+  let text = `${result.name} ${Math.round(result.main.temp)}°`;
+  item.innerText = text;
+  localContainer.appendChild(item);
+  item.classList.add("savedEl");
+
+  arrFromSavedToFav.push(text) 
+
+ 
+ // Only uniq element append to fav
+// let test=localStorage.getItem("saved")
+// let ArrTest=test.split(",")
+// let uniqArr = [...new Set(ArrTest)]
+
+//  upgrade localStorage
+  if(localStorage.getItem("saved")===null){
+    localStorage.setItem("saved", arrFromSavedToFav); 
+  }
+  else{
+    let array=localStorage.getItem("saved")
+   let newArr= array+"," +arrFromSavedToFav
+//console.log(array)//Bali 25°,Bali 25°,Bali 25°,Bali 25°
+//console.log(newArr)//Bali 25°,Bali 25°,Bali 25°,Bali 25°,Bali 25°,Bali 25°
+ let a =newArr.split(",")
+ let b=[...new Set(a)]
+ let c= b.toString()
+ console.log()
+localStorage.setItem("saved", c); 
+  }
+ 
+//    //remove item
+//    item.addEventListener('dblclick', function(){
+//     localContainer.removeChild(item);
+// })
+window.location.reload()
+}
+
+
+
 
 //correctly display of date
 

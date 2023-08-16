@@ -6,6 +6,7 @@ body {
   background-repeat: no-repeat;
   margin: 0;
   height: 100vh;
+  font-family: "Roboto", sans-serif;
 }
 
 #icon {
@@ -181,11 +182,21 @@ body {
 .visible {
   visibility: visible;
 }
-
-#localContainer{
+.containerComplect{
+  display: none;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.422);
+  flex-direction: column;
+}
+.localContainerAfter{
   display: flex;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.422);
+  flex-direction: column;
+}
+.localContainer{
+  display: flex;
+  justify-content: center;
   color: rgb(255, 255, 255);
   font-family: "Roboto", sans-serif;
 }
@@ -195,6 +206,21 @@ body {
   border: 2px solid #cdf3a2;
   border-radius: 14px;
   list-style-type: none;
+}
+.deleteAll{
+  padding: 10px;
+  font-size: 20px;
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  
+}
+.add{
+  padding: 10px;
+  border-radius: 20px;
+  font-family: "Roboto", sans-serif;
+}
+.add:hover{
+  background-color: #cdf3a2;
 }
 @media all and (max-width: 800px) {
   body {
@@ -208,4 +234,5 @@ body {
   .container2 {
     width: 380px;
   }
+
 }

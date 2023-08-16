@@ -7,8 +7,7 @@ const localContainer = document.querySelector(".localContainer");
 const containerComplect = document.querySelector(".containerComplect");
 const addBtn = document.querySelector(".add");
 addBtn.addEventListener("click", addToFav);
-const deleteAll= document.querySelector(".deleteAll")
-
+const deleteAll = document.querySelector(".deleteAll");
 
 //API endpoint,key
 
@@ -20,9 +19,6 @@ const api = {
 const input = document.querySelector("#input");
 input.addEventListener("keypress", enter);
 
-
-
-
 //When window first time onload what to show and localStorage
 
 if (localStorage.getItem("input") !== null) {
@@ -30,7 +26,6 @@ if (localStorage.getItem("input") !== null) {
 } else {
   getInfoCopie("Bali");
 }
-
 
 //Get API for display info from LocalStorage by upload
 async function getInfoCopie(data) {
@@ -44,17 +39,11 @@ async function getInfoCopie(data) {
 
 //data from input and click enter
 function enter(e) {
-    localStorage.setItem("input", input.value);
+  localStorage.setItem("input", input.value);
   if (e.keyCode === 13) {
-   
     getInfo(input.value);
   }
-
 }
-
-
-
-
 
 //by click button
 document.querySelector(".btn").addEventListener("click", function () {
@@ -151,32 +140,31 @@ function displayResult(result) {
     "url('https://source.unsplash.com/1600x900/?" + result.name + "')";
 }
 
-
 //let arrFromSavedToFav =  localStorage.getItem("saved") || [];
-let arrFromSavedToFav =  [];
+let arrFromSavedToFav = [];
 
 //display info from LocalStorage by upload
-if(localStorage.getItem("saved") !== null) {
-  let array=localStorage.getItem("saved") // ['Bali 25°', 'Berlin 18°']
-  let arrayFromSaved=array.split(",")
+if (localStorage.getItem("saved") !== null) {
+  let array = localStorage.getItem("saved"); // ['Bali 25°', 'Berlin 18°']
+  let arrayFromSaved = array.split(",");
 
-  arrayFromSaved.forEach(e=>{
+  arrayFromSaved.forEach((e) => {
     const item = document.createElement("li");
-    item.textContent=e;
+    item.textContent = e;
     item.classList.add("savedEl");
     localContainer.appendChild(item);
-    containerComplect.classList.add("localContainerAfter")
-  })
- localStorage.setItem("newSaved", array)
+    containerComplect.classList.add("localContainerAfter");
+  });
+  localStorage.setItem("newSaved", array);
 }
 
 //Delete all
-deleteAll.addEventListener("click", deleteAllFunc)
-function deleteAllFunc(){
+deleteAll.addEventListener("click", deleteAllFunc);
+function deleteAllFunc() {
   localStorage.removeItem("saved");
   localStorage.removeItem("newSaved");
-    localContainer.innerHTML="";
-    window.location.reload()
+  localContainer.innerHTML = "";
+  window.location.reload();
 }
 
 // by click "add" save some cities to localStorage
@@ -184,44 +172,38 @@ function deleteAllFunc(){
 async function addToFav() {
   let storage = localStorage.getItem("input");
   const res = await fetch(
-    `${api.endpoint}weather?q=${storage}&units=metric&appID=${api.key}`);
+    `${api.endpoint}weather?q=${storage}&units=metric&appID=${api.key}`
+  );
   const result = await res.json();
   const item = document.createElement("li");
   let text = `${result.name} ${Math.round(result.main.temp)}°`;
   item.innerText = text;
   localContainer.appendChild(item);
   item.classList.add("savedEl");
-  arrFromSavedToFav.push(text) 
+  arrFromSavedToFav.push(text);
 
- 
+  // Only uniq element append to fav; upgrade localStorage
+  if (localStorage.getItem("saved") === null) {
+    localStorage.setItem("saved", arrFromSavedToFav);
+  } else {
+    let listFromLocalStorage = localStorage.getItem("saved");
+    let newListFromLocalStorage = listFromLocalStorage + "," + arrFromSavedToFav;
+   
+    let arrayFromList = newListFromLocalStorage.split(",");
+    let uniqArray = [...new Set(arrayFromList)];
+    let textFromUniqArray = uniqArray.toString();
 
+//requirement for alert
+if(uniqArray.some(e=>uniqArray.indexOf(e) === uniqArray.lastIndexOf(e))){
+   alert("This city is already added");
 
-
-// Only uniq element append to fav; upgrade localStorage
-  if(localStorage.getItem("saved")===null){
-    localStorage.setItem("saved", arrFromSavedToFav); 
-  }
-  else{
-    let array=localStorage.getItem("saved")
-   let newArr= array+"," +arrFromSavedToFav
- let a =newArr.split(",")
- let b=[...new Set(a)]
- let c= b.toString()
-  
-
-alert("This city is already added")
-localStorage.setItem("saved", c); 
-  }
-
-   //remove item
-//    item.addEventListener('dblclick', function(){
-//     localContainer.removeChild(item);
-// })
-window.location.reload()
+   window.location.reload();
 }
-
-
-
+   
+    localStorage.setItem("saved", textFromUniqArray);
+  }
+ 
+}
 
 //correctly display of date
 

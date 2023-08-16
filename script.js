@@ -44,11 +44,17 @@ async function getInfoCopie(data) {
 
 //data from input and click enter
 function enter(e) {
-  if (e.keyCode === 13) {
     localStorage.setItem("input", input.value);
+  if (e.keyCode === 13) {
+   
     getInfo(input.value);
   }
+
 }
+
+
+
+
 
 //by click button
 document.querySelector(".btn").addEventListener("click", function () {
@@ -185,32 +191,29 @@ async function addToFav() {
   item.innerText = text;
   localContainer.appendChild(item);
   item.classList.add("savedEl");
-
   arrFromSavedToFav.push(text) 
 
  
- // Only uniq element append to fav
-// let test=localStorage.getItem("saved")
-// let ArrTest=test.split(",")
-// let uniqArr = [...new Set(ArrTest)]
 
-//  upgrade localStorage
+
+
+// Only uniq element append to fav; upgrade localStorage
   if(localStorage.getItem("saved")===null){
     localStorage.setItem("saved", arrFromSavedToFav); 
   }
   else{
     let array=localStorage.getItem("saved")
    let newArr= array+"," +arrFromSavedToFav
-//console.log(array)//Bali 25°,Bali 25°,Bali 25°,Bali 25°
-//console.log(newArr)//Bali 25°,Bali 25°,Bali 25°,Bali 25°,Bali 25°,Bali 25°
  let a =newArr.split(",")
  let b=[...new Set(a)]
  let c= b.toString()
- console.log()
+  
+
+alert("This city is already added")
 localStorage.setItem("saved", c); 
   }
- 
-//    //remove item
+
+   //remove item
 //    item.addEventListener('dblclick', function(){
 //     localContainer.removeChild(item);
 // })

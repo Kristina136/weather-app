@@ -45,7 +45,6 @@ body {
 }
 
 #input {
-  margin: 5px;
   background-color: rgba(142, 127, 161, 0.3);
   border-radius: 20px;
   border: 3px solid #cdf3a2;
@@ -185,19 +184,17 @@ body {
 }
 .containerComplect{
   display: none;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.422);
-  flex-direction: column;
 }
 .localContainerAfter{
   display: flex;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.422);
   flex-direction: column;
+
 }
 .localContainer{
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   color: rgb(255, 255, 255);
   font-family: "Roboto", sans-serif;
 }
@@ -213,7 +210,6 @@ body {
   font-size: 20px;
   font-family: "Roboto", sans-serif;
   font-size: 20px;
-  
 }
 .add{
   padding: 10px;
@@ -235,5 +231,4 @@ body {
   .container2 {
     width: 380px;
   }
-
 }

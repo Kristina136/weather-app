@@ -2,6 +2,7 @@ body {
   background-image: url("https://images.unsplash.com/photo-1587923623987-c7e4083beb23?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fHN1bnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60");
   background-position-x: center;
   -webkit-background-size: 100%;
+  background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;
   margin: 0;

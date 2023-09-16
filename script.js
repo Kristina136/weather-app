@@ -75,6 +75,7 @@ async function getInfo(data) {
   input.value = "";
 }
 
+
 //display city
 
 function displayResult(result) {
@@ -192,14 +193,10 @@ async function addToFav() {
     let arrayFromList = newListFromLocalStorage.split(",");
     let uniqArray = [...new Set(arrayFromList)];
     let textFromUniqArray = uniqArray.toString();
-window.location.reload();
-//requirement for alert
-// if(uniqArray.some(e=>uniqArray.indexOf(e) === uniqArray.lastIndexOf(e))){
-//    alert("This city is already added");
+window.location.reload(
+  document.querySelector(".localContainer").style.display="none"
+);
 
-//    window.location.reload();
-//}
-   
     localStorage.setItem("saved", textFromUniqArray);
   }
  

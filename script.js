@@ -194,11 +194,11 @@ async function addToFav() {
     let textFromUniqArray = uniqArray.toString();
 
 //requirement for alert
-if(uniqArray.some(e=>uniqArray.indexOf(e) === uniqArray.lastIndexOf(e))){
-   alert("This city is already added");
+// if(uniqArray.some(e=>uniqArray.indexOf(e) === uniqArray.lastIndexOf(e))){
+//    alert("This city is already added");
 
-   window.location.reload();
-}
+//    window.location.reload();
+//}
    
     localStorage.setItem("saved", textFromUniqArray);
   }
